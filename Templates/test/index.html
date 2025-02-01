@@ -1,0 +1,393 @@
+{% extends 'base.html' %}
+{% block title %}Tests{% endblock title %}
+{% block content %}
+<style>
+    table{
+        margin:20px;
+        .container {
+        text-align: center;
+    }
+    }
+    td,th,tr,{
+        border: 1px solid black;
+        padding: 10px;
+    }
+    .submit-btn {
+        padding: 10px 15px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+.submit-btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<a href="add/" class="btn btn-primary"><button class="submit-btn">Add Test</button> </a>
+ 
+<div id="curve_chart"  ></div>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Date', 'marks',],
+            {% for i in total_marks_by_date %}
+    ['{{i.date}}', {{ i.total_marks }},],
+        {% endfor %}
+
+          ]);
+
+    var options = {
+        title: 'Test Marks',
+        curveType: 'function',
+        legend: { position: 'bottom' }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+    chart.draw(data, options);
+        }
+</script>
+
+
+ <div class="graph" style="inline-size:fit-content">
+                <div class="card">
+                    <div id="stat" style="width: 250px; height: 250px;">
+                        <div style="position: relative;">
+                            <div dir="ltr" style="position: relative; width: 250px; height: 250px;">
+                                <div aria-label="A chart." style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;">
+                                    <svg width="250" height="250" aria-label="A chart." style="overflow: hidden;">
+                                        <!-- SVG content goes here -->
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+            <script type="text/javascript">
+              google.charts.load('current', {'packages':['corechart']});
+              google.charts.setOnLoadCallback(drawChart);
+
+              function drawChart() {
+
+                var data = google.visualization.arrayToDataTable([
+                ['Test',     'Marks'],
+                {% for i in total_marks_by_date %}
+                ['{{i.date}}', {{ i.total_marks }},],
+
+
+                {% endfor %}]);
+
+                var options = {
+                  title: 'Total. Months: {{tc}}'
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById('stat'));
+
+                chart.draw(data, options);
+              }
+            </script>
+
+
+
+    <div class="container">
+
+       <table>
+    <tr>
+        <th>S.No</th>
+        <th>Date</th>
+        <th>Botany</th>
+        <th>Inorganic</th>
+        <th>Organic</th>
+        <th>Physics</th>
+        <th>Zoology</th>
+        <th>Update</th>
+    </tr>
+    {% for entry in all_data reversed %}
+    <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ entry.date }}</td>
+        <td>{{ entry.Botany }}</td>
+        <td>{{ entry.Inorganic }}</td>
+        <td>{{ entry.Organic }}</td>
+        <td>{{ entry.Physics }}</td>
+        <td>{{ entry.Zoology }}</td>
+        <td><a href="update/{{entry.id}}"  rel="noopener noreferrer"><button class="submit-btn">UPDATE</button></a></td>
+    </tr>
+    {% empty %}
+    <h1 style="color: red;">No Test Data Available. Add Data From The Above "Add Test " Button. </h1>
+
+    {% endfor %}
+</table></div>
+    <div class="container">
+
+<h1>Botany </h1>
+<table>
+    <tr>
+        <th>Date</th>
+        <th>Botany Marks</th>
+    </tr>
+    {% for date, marks in botany_marks %}
+    <tr>
+        <td>{{ date }}</td>
+        <td>{{ marks }}</td>
+    </tr>
+    {% endfor %}
+
+</table>
+<div id="curve_chart_botany" ></div>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Date', 'marks',],
+           {% for date, marks in botany_marks %}
+    ['{{date}}', {{ marks }},],
+        {% endfor %}
+
+          ]);
+
+    var options = {
+        title: 'Test Marks',
+        curveType: 'function',
+        legend: { position: 'bottom' }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart_botany'));
+
+    chart.draw(data, options);
+        }
+</script>
+
+</div>
+    <div class="container">
+<h1>Zoology </h1>
+<table>
+    <tr>
+        <th>Date</th>
+        <th> Marks</th>
+    </tr>
+    {% for date, marks in zoology_marks %}
+    <tr>
+        <td>{{ date }}</td>
+        <td>{{ marks }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<div id="curve_chart_zoology"></div>
+<script type="text/javascript">
+
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Date', 'marks',],
+           {% for date, marks in zoology_marks %}
+    ['{{date}}', {{ marks }},],
+        {% endfor %}
+
+          ]);
+
+    var options = {
+        title: 'Test Marks',
+        curveType: 'function',
+        legend: { position: 'bottom' }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart_zoology'));
+
+    chart.draw(data, options);
+        }
+</script>
+</div>
+    <div class="container">
+<h1>Inorganic </h1>
+<table>
+    <tr>
+        <th>Date</th>
+        <th> Marks</th>
+    </tr>
+    {% for date, marks in inorganic_marks %}
+    <tr>
+        <td>{{ date }}</td>
+        <td>{{ marks }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<div id="curve_chart_Inorganic"  ></div>
+<script type="text/javascript">
+
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Date', 'marks',],
+           {% for date, marks in inorganic_marks %}
+    ['{{date}}', {{ marks }},],
+        {% endfor %}
+
+          ]);
+
+    var options = {
+        title: 'Test Marks',
+        curveType: 'function',
+        legend: { position: 'bottom' }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart_Inorganic'));
+
+    chart.draw(data, options);
+        }
+</script>
+</div>
+    <div class="container">
+
+<h1>Physical </h1>
+<table>
+    <tr>
+        <th>Date</th>
+        <th> Marks</th>
+    </tr>
+    {% for date, marks in physical_marks %}
+    <tr>
+        <td>{{ date }}</td>
+        <td>{{ marks }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<div id="curve_chart_Physical"  ></div>
+
+<script type="text/javascript">
+
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Date', 'marks',],
+           {% for date, marks in physical_marks %}
+    ['{{date}}', {{ marks }},],
+        {% endfor %}
+
+          ]);
+
+    var options = {
+        title: 'Test Marks',
+        curveType: 'function',
+        legend: { position: 'bottom' }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart_Physical'));
+
+    chart.draw(data, options);
+        }
+</script>
+</div>
+    <div class="container">
+
+<h1>Organic </h1>
+<table>
+    <tr>
+        <th>Date</th>
+        <th> Marks</th>
+    </tr>
+    {% for date, marks in organic_marks %}
+    <tr>
+        <td>{{ date }}</td>
+        <td>{{ marks }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<div id="curve_chart_Organic"  ></div>
+<script type="text/javascript">
+
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Date', 'marks',],
+           {% for date, marks in organic_marks %}
+    ['{{date}}', {{ marks }},],
+        {% endfor %}
+
+          ]);
+
+    var options = {
+        title: 'Test Marks',
+        curveType: 'function',
+        legend: { position: 'bottom' }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart_Organic'));
+
+    chart.draw(data, options);
+        }
+</script>
+
+</div>
+    <div class="container">
+<h1>Physics </h1>
+<table>
+    <tr>
+        <th>Date</th>
+        <th> Marks</th>
+    </tr>
+    {% for date, marks in physics_marks %}
+    <tr>
+        <td>{{ date }}</td>
+        <td>{{ marks }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+<div id="curve_chart_Physics" ></div>
+
+<script type="text/javascript">
+
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Date', 'marks',],
+           {% for date, marks in physics_marks %}
+    ['{{date}}', {{ marks }},],
+        {% endfor %}
+
+          ]);
+
+    var options = {
+        title: 'Test Marks',
+        curveType: 'function',
+        legend: { position: 'bottom' }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart_Physics'));
+
+    chart.draw(data, options);
+        }
+</script>
+</div>
+
+
+
+{% endblock content %}

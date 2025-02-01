@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock title %}
+
+{% block content %}    
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        .profile-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 20px;
+        }
+
+        .profile-header img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .profile-header .user-info {
+            flex: 1;
+        }
+
+        .profile-header .user-info h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .profile-header .user-info p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .profile-content {
+            margin-top: 20px;
+        }
+
+        .profile-content h2 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .profile-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .profile-content ul li {
+            background: #f5f5f5;
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .profile-content ul li span {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .edit-profile-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .edit-profile-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <img src="https://avatars.githubusercontent.com/u/70070584?v=4" alt="User Profile Picture">
+            <div class="user-info">
+                <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+                <p>Email: {{ user.email }}</p>
+                <p>Username: {{ user.username }}</p>
+            </div>
+        </div>
+
+        <div class="profile-content">
+            <h2>Recent Activities</h2>
+            <ul>
+                {% for activity in recent_activities %}
+                <li>
+                    <span>{{ activity.description }}</span>
+                    <span>{{ activity.date }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+            <a href=" " class="edit-profile-btn">Edit Profile</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // JavaScript for interactivity if needed
+        });
+    </script>
+{% endblock content %}

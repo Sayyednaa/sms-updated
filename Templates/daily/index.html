@@ -1,0 +1,235 @@
+{% extends 'base.html' %}
+{% block title %}Time{% endblock title %}
+{% block content %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/time.css' %}">
+<style>
+    .graph{
+        inline-size: fit-content;
+    }
+    * {
+  box-sizing: border-box;
+}
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
+  padding: 5px;
+}
+    table,
+    th,
+    td {
+        border: 1px solid;
+    }
+    .curve_chart {
+  width: 100%;
+  min-height: 450px;
+}
+.row {
+  margin:0 !important;
+}
+.tpie{
+    margin:20px;
+    align-items: center;
+    text-align: center;
+}
+body{
+    text-align: center;
+}
+.update-btn {
+        padding: 10px 15px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+.update-btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<h1 style="color:red">{{error}}</h1>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Date', 'Time',],
+            {% for i in time_entries %}
+    ['{{i.date}}', {{ i.duration }},],
+        {% endfor %}
+
+          ]);
+
+    var options = {
+        title: 'Daily Study Time',
+        curveType: 'function',
+        legend: { position: 'bottom' }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+    chart.draw(data, options);
+        }
+</script>
+</head>
+
+<body>
+    <a href="add/"   rel="noopener noreferrer"><button type="button" class="btn">Enter Time</button></a>
+    <div id="curve_chart" style="width: 100%; height: 100%"></div>
+    <div class="container">
+        <h2>Total Time : {{hours}}</h2>
+        <h2>Avg. Day (Hours) : {{avg}}</h2>
+        <h2>Zero Days : {{zero}} out of Total: {{tday}}</h2>
+        <h2>Highest Day:{{highday}},</h2>
+        <h2> Highest Week:{{week}}</h2>
+    </div>
+
+    <br>
+    <br>
+    <br>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Month</th>
+                        <th>Total Duration</th>
+                        <th>Avg</th>
+
+
+                    </tr>
+
+                </thead>
+                <tbody>
+                    {% for summary in month %}
+                    <tr>
+                        <td>{{ summary.month|date:'F Y' }}</td>
+                        <td>{{ summary.total_duration }}</td>
+                        <td>{{ summary.avg_duration|default_if_none:"N/A"|floatformat:2 }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+
+                </tbody>
+            </table>
+
+    <h2>Tabular Form<h2>
+            <table >
+
+                <tr>
+                    <th>Sr. </th>
+
+                    <th>Date: </th>
+                    <th>Time (Hours): </th>
+                    <th>Update </th>
+
+                </tr>
+                {% for i in time_entries reversed %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{i.date}}</td>
+                    <td>{{i.duration}}</td>
+                    <td><a href="update/{{i.id}}"   rel="noopener noreferrer"><button class="update-btn">UPDATE</button></a></td>
+
+                </tr>
+                {% endfor %}
+            </table>
+            <div class="graph">
+                <div class="card">
+                    <div id="stat" style="width: 250px; height: 250px;">
+                        <div style="position: relative;">
+                            <div dir="ltr" style="position: relative; width: 250px; height: 250px;">
+                                <div aria-label="A chart." style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;">
+                                    <svg width="250" height="250" aria-label="A chart." style="overflow: hidden;">
+                                        <!-- SVG content goes here -->
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="graph">
+                    <div class="card">
+                        <div id="stat2" style="width: 250px; height: 250px;">
+                            <div style="position: relative;">
+                                <div dir="ltr" style="position: relative; width: 250px; height: 250px;">
+                                    <div aria-label="A chart." style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%;">
+                                        <svg width="250" height="250" aria-label="A chart." style="overflow: hidden;">
+                                            <!-- SVG content goes here -->
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+            <script type="text/javascript">
+              google.charts.load('current', {'packages':['corechart']});
+              google.charts.setOnLoadCallback(drawChart);
+
+              function drawChart() {
+
+                var data = google.visualization.arrayToDataTable([
+                ['Month',     'Duration'],
+                {% for summary in month %}
+
+                    ['{{summary.month|date:'F Y' }}',     {{summary.total_duration }}],
+
+
+                {% endfor %}]);
+
+                var options = {
+                  title: 'Total. Months: {{tc}}'
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById('stat'));
+
+                chart.draw(data, options);
+              }
+            </script>
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+            <script type="text/javascript">
+              google.charts.load('current', {'packages':['corechart']});
+              google.charts.setOnLoadCallback(drawChart);
+
+              function drawChart() {
+
+                var data = google.visualization.arrayToDataTable([
+                ['Month',     'Duration'],
+                {% for summary in month %}
+
+                    ['{{summary.month|date:'F Y' }}',     {{summary.avg_duration }}],
+
+
+                {% endfor %}]);
+
+                var options = {
+                  title: 'Avg. Months: {{tc}}'
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById('stat2'));
+
+                chart.draw(data, options);
+              }
+            </script>
+
+
+            {% endblock %}

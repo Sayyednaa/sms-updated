@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <style>
+        * {
+            box-sizing: border-box;
+          }
+
+          body {
+            background:linear-gradient(to bottom,blue,cyan)
+          }
+
+          .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+          }
+
+          .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            animation: slide-up 0.5s ease-out;
+          }
+
+          @keyframes slide-up {
+            from {
+              transform: translateY(50px);
+              opacity: 0;
+            }
+            to {
+              transform: translateY(0);
+              opacity: 1;
+            }
+          }
+
+          h2 {
+            margin-top: 0;
+          }
+
+          form {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+          }
+
+          .input-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+          }
+
+          input {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #f0f0f0;
+            font-size: 16px;
+          }
+
+          label {
+            margin-bottom: 5px;
+            font-size: 16px;
+          }
+
+          button {
+            background-color: #ff8c00;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.2s ease-out;
+          }
+
+          button:hover {
+            background-color: #ffad5c;
+          }
+
+          .links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+          }
+
+          .links a {
+            color: #666;
+            font-size: 14px;
+            text-decoration: none;
+            transition: color 0.2s ease-out;
+          }
+
+          .links a:hover {
+            color: #000;
+          }
+
+          input:focus {
+            outline: none;
+            box-shadow: 0px 0px 5px rgba(255, 140, 0, 0.5);
+          }
+
+          button:focus {
+            outline: none;
+            box-shadow: 0px 0px 5px rgba(255, 140, 0, 0.5);
+          }
+          .red{
+            color: red;
+          }
+    </style>
+    <link rel="icon" type="image/x-icon" href="https://png.pngtree.com/png-vector/20220520/ourmid/pngtree-digital-study-icon-color-flat-png-image_4687517.png">
+  <meta charset="UTF-8">
+  <title>Login Page</title>
+
+</head>
+<body>
+  <div class="container">
+    <div class="form-container">
+      <h2>Login</h2>
+        <form action="/login" method="post">{% csrf_token %}
+
+            {% csrf_token %}
+        <div class="input-group">
+            <label for="email">Username</label>
+          <input type="text" id="email" required name="email">
+
+        </div>
+
+        <div class="input-group">
+            <label for="password">Password</label>
+          <input type="password" id="password" required name="password">
+
+        </div>
+        <button type="submit">Login</button>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+           <p  {% if message.tags %} class="{{ message.tags }} red"{% endif %}>{{ message }}</p>
+            {% endfor %}
+        </ul>
+        {% endif %}
+      </form>
+      <div class="links">
+        <a href="/forgot_password">Forgot Password?</a>
+        <a href="/signup">Create Account</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

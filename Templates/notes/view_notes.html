@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}View Notes{% endblock title %}
+{% block content %}
+
+<script src="https://cdnjs.com/libraries/pdf.js"></script>
+  <h1>{{ notes.title }}</h1>
+
+  <p>{{ notes.description }}</p>
+  <hr>
+
+
+  {% comment %} <a href="{% url 'notes:edit_note' note.pk %}" class="btn btn-warning btn-sm">Edit</a>
+  <a href="{% url 'notes:delete_note' note.pk %}" class="btn btn-danger btn-sm">Delete</a> {% endcomment %}
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Notes{% endblock title %}
+{% block content %}
+
+<div class="divupl">
+    <script src="/static/js/html2canvas.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/css/notes.css" />
+
+    <a href="upload_note/" class="btnupl"><button class="btn-add">Add Note</button></a>
+</div>
+<br>
+
+<div class="margin-top container">
+    {% for note in notes reversed %}
+        <div class="card" id="{{ forloop.counter }}" ondblclick="downloadImage(this)">
+            <p class="note-content">{{ note.description }}</p>
+            <a href="delete_note/{{ note.pk }}" class="btn-delete">Delete</a>
+            <a href="" class="btn-add">Download</a>
+        </div>
+    {% empty %}
+        <h2>No notes yet.</h2>
+    {% endfor %}
+</div>
+
+<script>
+    function downloadImage(element) {
+        html2canvas(element).then((canvas) => {
+            const imageDataURL = canvas.toDataURL("image/png");
+            const a = document.createElement("a");
+            a.href = imageDataURL;
+            a.download = "note.png";
+            a.click();
+        });
+    }
+</script>
+
+{% endblock %}

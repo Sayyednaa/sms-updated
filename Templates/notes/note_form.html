@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Upload Notes{% endblock %}
+
+{% block content %}
+
+<style>
+  form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+
+  input[type="text"],
+  textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+
+  textarea {
+    height: 150px;
+    resize: none;
+  }
+
+  button {
+    background-color: crimson;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  button:hover {
+    background-color: darkred;
+  }
+</style>
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  
+  
+  <label for="description">Note:</label>
+  <textarea name="description">{{ note.description }}</textarea>
+
+  <button type="submit">Save</button>
+</form>
+
+{% endblock %}

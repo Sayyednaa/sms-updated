@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Time{% endblock title %}
+
+{% load static %}
+{% block content %}
+<!-- Adding custom CSS -->
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+    }
+
+    .form-container {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+    .form-container label {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .form-container .form-control {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .form-container button {
+        width: 100%;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 15px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .form-container button:hover {
+        background-color: #0056b3;
+    }
+
+</style>
+
+<div class="form-container">
+    <form action="" method="post">
+        {% csrf_token %}
+        <label for="date">Date</label>
+        <input type="date" class="form-control" id="date" name="date" value="{{ date }}">
+
+        <label for="time">Time (In Hours)</label>
+        <input type="number" class="form-control" id="time" name="duration" value="{{ time }}">
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+{% endblock content %}

@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Add Test{% endblock %}
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .form-container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #555;
+    }
+
+    .form-container .form-control {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .form-container .form-control:focus {
+        border-color: #007bff;
+        outline: none;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    .form-container button {
+        width: 100%;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 15px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .form-container button:hover {
+        background-color: #0056b3;
+    }
+
+    .form-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+    
+</style>
+
+<div class="form-container">
+    <h2>Add Test</h2>
+    <form action="" method="post">
+        {% csrf_token %}
+        <label for="botany">Botany</label>
+        <input type="number" class="form-control" id="botany" name="botany" value="{{ data.Botany }}">
+
+        <label for="zoology">Zoology</label>
+        <input type="number" class="form-control" id="zoology" name="zoology" value="{{ data.Zoology }}">
+
+        <label for="organic">Organic</label>
+        <input type="number" class="form-control" id="organic" name="organic" value="{{ data.Organic }}">
+
+        <label for="inorganic">Inorganic</label>
+        <input type="number" class="form-control" id="inorganic" name="inorganic" value="{{ data.Inorganic }}">
+
+        <label for="physical">Physical</label>
+        <input type="number" class="form-control" id="physical" name="physical" value="{{ data.Physical }}">
+
+        <label for="Physics">Physics</label>
+        <input type="number" class="form-control" id="Physics" name="physics" value="{{ data.Physics }}">
+        <label for="date">Test Date</label>  
+        <input type="date" class="form-control" id="date" name="date" value="{{date}}">
+
+        <button type="submit">Submit</button>
+    </form>
+    <br>
+    <form action="/test/delete/{{data.id}}/" method="post">
+        {% csrf_token %}
+        <button type="submit" class="delete-btn" style="background-color: red;">Delete</button>
+    </form>
+</div>
+{% endblock content %}
